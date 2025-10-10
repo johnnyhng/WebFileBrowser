@@ -1,0 +1,8 @@
+version: '3'
+services:
+  file-server:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data:/usr/share/nginx/html:ro
