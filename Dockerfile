@@ -1,14 +1,23 @@
-# Use the official Nginx image from the Docker Hub
-FROM nginx:alpine
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
 
-# Copy the local 'data' directory to the Nginx HTML directory in the container
-COPY ./data /usr/share/nginx/html
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Copy the new Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy the requirements file into the container
+COPY requirements.txt ./
 
-# Expose port 80 to the outside world
-EXPOSE 80
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Command to run Nginx when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+# Copy the rest of the application
+COPY . .
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Define environment variable
+ENV NAME World
+
+# Run the application using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
