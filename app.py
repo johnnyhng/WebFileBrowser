@@ -1,7 +1,9 @@
 import os
 from flask import Flask, send_from_directory, abort, url_for, redirect
+from user_model_api import user_model_api
 
 app = Flask(__name__)
+app.register_blueprint(user_model_api, url_prefix='/api/model')
 
 DATA_DIR = '/data'
 
@@ -60,4 +62,4 @@ def download_file(filename):
     return send_from_directory(DATA_DIR, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)

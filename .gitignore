@@ -3,3 +3,10 @@ data/*
 
 # But do not ignore the .gitkeep file
 !data/.gitkeep
+
+# Ignore virtual environment and cache
+.venv
+__pycache__/
+
+# Ignore script
+wav_to_json_poster.py
