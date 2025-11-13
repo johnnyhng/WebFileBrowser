@@ -36,3 +36,33 @@ This project sets up a simple, yet robust, file server using a multi-container D
     docker-compose down
     ```
     This command will stop and remove the containers and any associated networks.
+
+## Configuration
+
+### Changing the Data Directory
+
+By default, the file server serves files from the `./data` directory. If you want to serve files from a different location on your host machine, you can change the volume mapping in the `docker-compose.yml` file.
+
+In `docker-compose.yml`, locate the `web` service and its `volumes` section:
+
+```yaml
+services:
+  web:
+    # ... (other configurations)
+    volumes:
+      - .:/usr/src/app
+      - ./data:/data:ro  # <-- Modify this line
+    # ... (other configurations)
+```
+
+Change `./data` to the path of the directory you want to serve. For example, to serve a directory named `my_files` located in your home directory, you would change it to:
+
+```yaml
+      - ~/my_files:/data:ro
+```
+
+After modifying `docker-compose.yml`, rebuild and restart the services for the changes to take effect:
+
+```bash
+docker-compose up --build -d
+```
