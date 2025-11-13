@@ -1,8 +1,10 @@
 import os
 from flask import Flask, send_from_directory, abort, url_for, redirect
+from flask_cors import CORS
 from user_model_api import user_model_api
 
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(user_model_api, url_prefix='/api/model')
 
 DATA_DIR = '/data'
