@@ -1,8 +1,9 @@
-version: '3'
 services:
   web:
     build: .
+    command: sh -c "pip install --no-cache-dir -r requirements.txt && gunicorn --bind 0.0.0.0:8000 app:app"
     volumes:
+      - .:/usr/src/app
       - ./data:/data:ro
     ports:
       - "8000:8000"
